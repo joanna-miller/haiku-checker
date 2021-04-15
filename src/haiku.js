@@ -8,24 +8,28 @@ export default class Haiku {
   syllableCounter(str) {
     let lineString = `${str} `;
     lineString = lineString.replace(/\W/g," ");
-    let lineArray = lineString.match(/[aeiouy]/gi);
-    let lineSyl = lineArray.length;
+    let lineSyl = lineString.match(/[aeiouy]/gi).length;
 
     if (lineString.match(/\w{2}e\s+/gi) != null) {
-      lineArray = lineString.match(/\w{2}e\s+/gi)
-      lineSyl -= lineArray.length;
+      lineSyl -= lineString.match(/\w{2}e\s+/gi).length;
+    }
+    if (lineString.match(/\bthe\b/gi) != null) {
+      lineSyl += lineString.match(/\bthe\b/gi).length;
     }
     if (lineString.match(/[aeiouy]{2}/gi) != null) {
-      lineArray = lineString.match(/[aeiouy]{2}/gi);
-      lineSyl -= lineArray.length;
+      lineSyl -= lineString.match(/[aeiouy]{2}/gi).length;
     }  
     if (lineString.match(/[aeiouy]{3}/gi) != null) {
-      lineArray = lineString.match(/[aeiouy]{3}/gi);
-      lineSyl -= lineArray.length;
+      lineSyl -= lineString.match(/[aeiouy]{3}/gi).length;
     }  
+    if (lineString.match(/[aieouy]{1}ing\b/gi) != null) {
+      lineSyl += lineString.match(/[aeiouy]{1}ing\b/gi).length;
+    }
+    if (lineString.match(/ia/gi) != null ){
+      lineSyl += lineString.match(/ia/gi).length;
+    }
     if (lineString.match(/[^aeiouy]+le\s+/gi) != null) {
-      lineArray = lineString.match(/[^aeiouy]+le\s+/gi);
-      lineSyl += lineArray.length;
+      lineSyl += lineString.match(/[^aeiouy]+le\s+/gi).length;
     }
     return lineSyl;
   }
